@@ -56,7 +56,6 @@
 				return(
 					<div>
 					<textarea col ="5" row ="22" onChange = {this.handleChange} value = {this.props.value}></textarea>
-					<p>{this.props.value}</p>
 					</div>
 				);
 			}
@@ -74,6 +73,11 @@
 			}
 		});
 		
+		
+		
+		
+		
+		
 		var Items = React.createClass({
 			getInitialState:function(){
 				return{
@@ -81,7 +85,7 @@
 					commentLevel:"firstLayer"
 				};
 			},
-			handleClickS:function(e){
+			handleClick:function(e){
 				e.preventDefault();
 				this.setState({
 					showComment:"true"
@@ -94,7 +98,7 @@
 						{this.props.items.map(item => (
 							<div key = {item.id}>
 								<p>{item.text}</p>
-								<Button onClick = {this.handleClickS} type="comment"/>
+								<Button onClick = {this.handleClick} type="comment"/>
 								<Comments showComment = {this.state.showComment}/>
 							</div>
 							)
@@ -104,8 +108,6 @@
 			}
 		});
 		
-		
-
 		var Comments = React.createClass({
 
 			getInitialState:function(){
@@ -131,11 +133,7 @@
 			
 			render: function(){
 				if (this.props.showComment === "true" ){
-					var comments = {
-						<InputArea onChange = {this.ChangeText} value = {this.state.text}/> 
-						<Button onClick = {this.handleClick} type="Post"/>
-						<CommentItems items = {this.state.items}>
-					};
+					var comments = <InputArea onChange = {this.ChangeText} value = {this.state.text}/> ;
 				}
 				else
 					return null;
@@ -143,6 +141,8 @@
 				return (
 					<div>
 						{comments}
+						<Button onClick = {this.handleClick} type="Post Comments"/>
+						<CommentItems items = {this.state.items}/>
 					</div>
 				);
 			}
@@ -152,7 +152,6 @@
 			getInitialState:function(){
 				return{
 					showComment:"false",
-					commentLevel:"firstLayer"
 				};
 			},
 			handleClick:function(e){
@@ -166,7 +165,7 @@
 				return(
 					<div>
 						{this.props.items.map(item => (
-							<div key = {item.id}>
+							<div>
 								<p>{item.text}</p>
 								<Button onClick = {this.handleClick} type="reply"/>
 								<SecondaryComments showComment = {this.state.showComment}/>
@@ -177,7 +176,6 @@
 				);
 			}
 		});
-		
 		
 		var SecondaryComments = React.createClass({
 			getInitialState:function(){
@@ -210,7 +208,7 @@
 				return(
 					<div>
 						{comments}
-						<Button onClick = {this.handleClick} type="Post"/>
+						<Button onClick = {this.handleClick} type="Post Replies"/>
 						<CommentItemsS items = {this.state.items}/>
 					</div>
 				);
@@ -231,6 +229,8 @@
 				);
 			}
 		});
+
+		
 		
 	
 		ReactDOM.render(
