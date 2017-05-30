@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 var Reactions = React.createClass({
 	handleChange:function(e){

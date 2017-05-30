@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from './Button.js';
 import Comment from './Comment.js';
-import InputArea from './InputArea.js'
+import InputArea from './InputArea.js';
 
 var Post = React.createClass({
 	//following are for comments
@@ -39,11 +39,15 @@ var Post = React.createClass({
 	},
 	
 	render: function(){
-		var comments = [];
 		var enableComment;
+		var files = [];
+		var comments = [];
 		for(var i=0; i<this.props.postItem.comments.length; i++){
 			comments.push(<Comment commentItem={this.props.postItem.comments[i]} showReplies={this.showReplies} 
 							onClick={this.postReply} onChange={this.changeReply}/>);
+		}
+		for(i=0; i<this.props.postItem.uploads.length; i++){
+			files.push(<img alt="lol" src={this.props.postItem.uploads[i].url}/>);
 		}
 		//if there is no comment, then don't show anything
 		if(this.props.postItem.showComment === true){
@@ -58,7 +62,7 @@ var Post = React.createClass({
 			
 		return(
 			<div>
-				<p>{this.props.postItem.text}<Button onClick={this.showComments} type="Comment"/></p>
+				<p>{this.props.postItem.text}{files}<Button onClick={this.showComments} type="Comment"/></p>
 				{enableComment}
 			</div>
 		);

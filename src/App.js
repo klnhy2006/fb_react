@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import InputArea from './/components/InputArea.js';
 import Button from './components/Button.js';
 import Post from './components/Post.js';
+import Upload from './components/Upload.js';
+import SearchBar from './components/SearchBar.js';
 import './App.css';
+//import {Uploader} from 'react-file-upload';
 
 //this is the container for the entire page, contains the sear
 var App = React.createClass( {
@@ -12,10 +14,32 @@ var App = React.createClass( {
 			posts:[],
 			text:'hahahahahah',
 			//reaction:"bored",
-			//file:""
+			url:"",
+			uploads:[],
+			searchText:"",
+			searchResults:[]
 		};
 	},
-	
+	//for changes in search bar
+	onChangeSearch: function (newSearchText) {
+		this.setState({searchText: newSearchText});
+		var results = [];
+		if(newSearchText === ""){
+			for (var i=0; i< this.state.posts.length && i<5; i++){
+				results.push(this.state.posts[i].text);
+			}
+		}else{
+			for(i=0; i< this.state.posts.length; i++){
+				if(this.state.posts[i].text.indexOf(newSearchText) !== -1){
+					results.push(this.state.posts[i].text);
+				}
+			}
+		}
+		this.setState({searchResults: results});
+	},
+	clearResults: function () {
+		this.setState ({searchResults:[],searchText:""});
+	},
 	//for changes in inputarea of a new post
 	handleChange: function (newText) {
 		this.setState({text: newText});
@@ -27,10 +51,20 @@ var App = React.createClass( {
 			commentText: "",
 			comments: [],
 			showComment: false,
+			uploads: this.state.uploads,
 			index: this.state.posts.length
-		};
+		};//change uploads here
 		this.setState((prevState) => 
-		({posts: prevState.posts.concat(newPost),text: ''}));	
+		({posts: prevState.posts.concat(newPost),text: '',url:'', uploads:[]}));	
+	},
+	
+	//for posting photos/videos 
+	uploadThings: function() {
+		var newUpLoad = {url: this.state.url};
+		this.setState((prevState) => 
+		({uploads: prevState.uploads.concat(newUpLoad)}));
+		alert("hahaa");
+				
 	},
 	
 	//for showing comment section of posts[postI]
@@ -94,15 +128,18 @@ var App = React.createClass( {
 	render: function() {
 		var posts = [];
 		for(var i=0; i<this.state.posts.length; i++){
-			posts.push(<Post postItem={this.state.posts[i]} onClickCom={this.postComment} onClickRep={this.postReply} 
+			posts.push(<Post postItem={this.state.posts[i]}
+						onClickCom={this.postComment} onClickRep={this.postReply} 
 						onChangeComment={this.onChangeComment} onChangeReply={this.onChangeReply}
 						showComments={this.showComment} showReplies={this.showReply}/>);	
 		}
-		
 		return (
 		  <div className="App">
+			<SearchBar searchText={this.state.searchText} onChangeSearch={this.onChangeSearch} 
+			results={this.state.searchResults} clearResults={this.clearResults}/>
 			<div className="App-header">
 			  <InputArea onChange={this.handleChange} value={this.state.text}/>
+			  
 			  <Button onClick={this.handleClick} type="Post"/>
 			</div>
 			 {posts}
@@ -112,3 +149,5 @@ var App = React.createClass( {
 });
 
 export default App;
+
+//<Upload url={this.state.url} onChange={this.uploadThings}/>

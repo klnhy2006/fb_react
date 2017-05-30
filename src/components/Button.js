@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 var Button = React.createClass({
 	handleClick: function(e){
