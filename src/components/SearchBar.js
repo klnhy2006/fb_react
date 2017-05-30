@@ -5,13 +5,15 @@ var SearchBar = React.createClass({
 		e.preventDefault();
 		this.props.onChangeSearch (e.target.value);
 	},
-	/*handleClick: function (e) {
-		ths.props.
-	},*/
+	//for selecting a post from results
+	handleClick: function (e) {
+		e.preventDefault();
+		this.props.showResult (e.target.name);
+	},
 	render: function () {
 		var resultBox = [];
 		for (var i=0; i<this.props.results.length; i++){
-			resultBox.push(<p /*onClick={this.handleClick}*/>{this.props.results[i]}</p>);
+			resultBox.push(<button name={this.props.results[i].index} onMouseDown={this.handleClick}>{this.props.results[i].text}</button>);
 		}
 		
 		return(

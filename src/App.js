@@ -17,7 +17,8 @@ var App = React.createClass( {
 			url:"",
 			uploads:[],
 			searchText:"",
-			searchResults:[]
+			searchResults:[],
+			selectedIndex: -1
 		};
 	},
 	//for changes in search bar
@@ -26,20 +27,29 @@ var App = React.createClass( {
 		var results = [];
 		if(newSearchText === ""){
 			for (var i=0; i< this.state.posts.length && i<5; i++){
-				results.push(this.state.posts[i].text);
+				results.push({text: this.state.posts[i].text, index: this.state.posts[i].index});
 			}
 		}else{
 			for(i=0; i< this.state.posts.length; i++){
 				if(this.state.posts[i].text.indexOf(newSearchText) !== -1){
-					results.push(this.state.posts[i].text);
+					results.push({text: this.state.posts[i].text, index: this.state.posts[i].index});
 				}
 			}
 		}
 		this.setState({searchResults: results});
+		//clear everything when starting another search
+		if(this.state.selectedIndex !== -1)
+			this.setState({selectedIndex: -1});
 	},
+	//for clearing when search bar looses focus
 	clearResults: function () {
 		this.setState ({searchResults:[],searchText:""});
 	},
+	//for showing the post that's clicked on
+	showResult: function (postI) {
+		this.setState({selectedIndex: postI, searchResults:[],searchText:""});
+	},
+	
 	//for changes in inputarea of a new post
 	handleChange: function (newText) {
 		this.setState({text: newText});
@@ -63,8 +73,6 @@ var App = React.createClass( {
 		var newUpLoad = {url: this.state.url};
 		this.setState((prevState) => 
 		({uploads: prevState.uploads.concat(newUpLoad)}));
-		alert("hahaa");
-				
 	},
 	
 	//for showing comment section of posts[postI]
@@ -133,10 +141,17 @@ var App = React.createClass( {
 						onChangeComment={this.onChangeComment} onChangeReply={this.onChangeReply}
 						showComments={this.showComment} showReplies={this.showReply}/>);	
 		}
+		//this is the selected post from search bar
+		var result = null;
+		if (this.state.selectedIndex !== -1){
+			result = posts[this.state.selectedIndex];
+		}
 		return (
 		  <div className="App">
 			<SearchBar searchText={this.state.searchText} onChangeSearch={this.onChangeSearch} 
-			results={this.state.searchResults} clearResults={this.clearResults}/>
+			results={this.state.searchResults} clearResults={this.clearResults}
+			showResult={this.showResult}/>
+			{result}
 			<div className="App-header">
 			  <InputArea onChange={this.handleChange} value={this.state.text}/>
 			  
