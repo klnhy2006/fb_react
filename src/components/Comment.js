@@ -3,12 +3,16 @@ import Button from './Button.js';
 import InputArea from './InputArea.js'
 
 var Comment = React.createClass({
+	showLike: function () {
+		this.props.handleLikes (this.props.commentItem.index);
+	},
+	
 	showReplies: function() {
 		this.props.showReplies(this.props.commentItem.index);
 	},
 	handleClick: function () {
 		var newReply = {
-			text: this.props.commentItem.replyText,
+			text: this.props.commentItem.replyText
 		};
 		var itemCopy =Object.assign({}, this.props.commentItem);
 		itemCopy.replies = itemCopy.replies.slice();
@@ -35,10 +39,16 @@ var Comment = React.createClass({
 		}else{
 			enableReply = null;
 		}
-			
+		//for likes
+		var buttonText;
+		if(this.props.commentItem.liked === true){
+			buttonText = "Liked";
+		}else{
+			buttonText = "Hated";
+		}	
 		return(
 			<div>
-				<p>{this.props.commentItem.text}<Button onClick={this.showReplies} type="Reply"/></p>
+				<p>{this.props.commentItem.text}<Button onClick={this.showReplies} type="Reply"/><Button onClick={this.showLike} type={buttonText}/></p>
 				{enableReply}
 			</div>
 		);

@@ -62,10 +62,18 @@ var App = React.createClass( {
 			comments: [],
 			showComment: false,
 			uploads: this.state.uploads,
-			index: this.state.posts.length
+			index: this.state.posts.length,
+			liked: false
 		};//change uploads here
 		this.setState((prevState) => 
 		({posts: prevState.posts.concat(newPost),text: '',url:'', uploads:[]}));	
+	},
+	forPostLikes: function (postI) {
+		var stateCopy = Object.assign({}, this.state);
+		stateCopy.posts = stateCopy.posts.slice();
+		stateCopy.posts[postI] = Object.assign({}, stateCopy.posts[postI]);
+		stateCopy.posts[postI].liked = stateCopy.posts[postI].liked === false?true:false;
+		this.setState(stateCopy);
 	},
 	
 	//for posting photos/videos 
@@ -100,7 +108,15 @@ var App = React.createClass( {
 		stateCopy.posts[postI].commentText ="";
 		this.setState(stateCopy);
 	},
-	
+	forCommentLikes: function (postI, comI) {
+		var stateCopy = Object.assign({}, this.state);
+		stateCopy.posts = stateCopy.posts.slice();
+		stateCopy.posts[postI] = Object.assign({}, stateCopy.posts[postI]);
+		stateCopy.posts[postI].comments = stateCopy.posts[postI].comments.slice();
+		stateCopy.posts[postI].comments[comI] = Object.assign({}, stateCopy.posts[postI].comments[comI]);
+		stateCopy.posts[postI].comments[comI].liked = stateCopy.posts[postI].comments[comI].liked === false?true:false;
+		this.setState(stateCopy);
+	},
 	//for showing reply section of posts[postI][comI]
 	showReply: function (postI,comI) {
 		var stateCopy = Object.assign({}, this.state);
@@ -136,7 +152,8 @@ var App = React.createClass( {
 	render: function() {
 		var posts = [];
 		for(var i=0; i<this.state.posts.length; i++){
-			posts.push(<Post postItem={this.state.posts[i]}
+			posts.push(<Post postItem={this.state.posts[i]} 
+						handleLikes={this.forPostLikes} handleLikesC={this.forCommentLikes}
 						onClickCom={this.postComment} onClickRep={this.postReply} 
 						onChangeComment={this.onChangeComment} onChangeReply={this.onChangeReply}
 						showComments={this.showComment} showReplies={this.showReply}/>);	
