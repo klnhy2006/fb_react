@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button.js';
 import InputArea from './InputArea.js'
+import '../App.css';
 
 var Comment = React.createClass({
 	showLike: function () {
@@ -31,7 +32,7 @@ var Comment = React.createClass({
 		}
 		//if there is no reply, then don't show anything
 		if(this.props.commentItem.showReply === true){
-			enableReply = (<div>
+			enableReply = (<div className="Reply-Collection">
 						   <InputArea onChange={this.handleChange} value={this.props.commentItem.replyText}/>
 						   <Button onClick={this.handleClick} type="Post Reply"/>
 						   {replies}
@@ -47,7 +48,7 @@ var Comment = React.createClass({
 			buttonText = "Hated";
 		}	
 		return(
-			<div>
+			<div className="Comments-Collection">
 				<p>{this.props.commentItem.text}<Button onClick={this.showReplies} type="Reply"/><Button onClick={this.showLike} type={buttonText}/></p>
 				{enableReply}
 			</div>

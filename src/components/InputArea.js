@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 var InputArea = React.createClass ({
 	handleChange:function (e) {

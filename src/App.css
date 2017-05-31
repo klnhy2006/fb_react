@@ -1,24 +1,62 @@
-.App {
-  text-align: center;
+textarea {
+	resize: none;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+button {
+	margin: 5px;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+/*for search area*/
+.Search-Bar {
+	height: 50px;
+	background-color: #3B5998;
+	position: relative;
 }
-
-.App-intro {
-  font-size: large;
+.Search-Bar input {
+	height: 50%;
+	width: 150px;
+	box-sizing: border-box;
+	position: absolute;
+	top: 25%;
+	left: 10px;
+	padding-left: 5px;
+	border-style: none;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.Search-Result {
+	width: 150px;
+	height: 100%;
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	top: 75%;
+	left: 5px;
+	background-color: white;
+	border-style: none;
+}
+.Search-Result:hover {
+	background-color: #ECF0F7;
+}
+/*for input area of post*/
+.Post-Area {
+	background-color: white;
+	height: 50px;
+	padding: 10px;
+	color: white;
+}
+/*for posts*/
+.Posts-Collection {
+	background-color: #E9EBEE;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+.Posts-Collection p {
+	background-color: white;
+	width: 50%;
+	padding: 3px;
+}
+/*for comments*/
+.Comments-Collection p{
+	width: 30%;
+}
+/*for reply*/
+.Reply-Collection {
+	width: 15%;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import InputArea from './/components/InputArea.js';
+import InputArea from './components/InputArea.js';
 import Button from './components/Button.js';
 import Post from './components/Post.js';
 import Upload from './components/Upload.js';
@@ -13,7 +13,6 @@ var App = React.createClass( {
 		return {
 			posts:[],
 			text:'hahahahahah',
-			//reaction:"bored",
 			url:"",
 			uploads:[],
 			searchText:"",
@@ -164,14 +163,13 @@ var App = React.createClass( {
 			result = posts[this.state.selectedIndex];
 		}
 		return (
-		  <div className="App">
+		  <div className="Home-Page">
 			<SearchBar searchText={this.state.searchText} onChangeSearch={this.onChangeSearch} 
 			results={this.state.searchResults} clearResults={this.clearResults}
 			showResult={this.showResult}/>
 			{result}
-			<div className="App-header">
+			<div className="Post-Area">
 			  <InputArea onChange={this.handleChange} value={this.state.text}/>
-			  
 			  <Button onClick={this.handleClick} type="Post"/>
 			</div>
 			 {posts}

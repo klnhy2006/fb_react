@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 var SearchBar = React.createClass({
 	handleChange: function (e) {
@@ -13,11 +14,11 @@ var SearchBar = React.createClass({
 	render: function () {
 		var resultBox = [];
 		for (var i=0; i<this.props.results.length; i++){
-			resultBox.push(<button name={this.props.results[i].index} onMouseDown={this.handleClick}>{this.props.results[i].text}</button>);
+			resultBox.push(<button className="Search-Result" name={this.props.results[i].index} onMouseDown={this.handleClick}>{this.props.results[i].text}</button>);
 		}
 		
 		return(
-			<div>
+			<div className="Search-Bar">
 				<input type="text" placeholder="search posts" 
 				onChange={this.handleChange} value={this.props.searchText}
 				onBlur={this.props.clearResults}/>

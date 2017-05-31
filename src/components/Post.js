@@ -2,6 +2,7 @@ import React from 'react';
 import Button from './Button.js';
 import Comment from './Comment.js';
 import InputArea from './InputArea.js';
+import '../App.css';
 
 var Post = React.createClass({
 	showLike: function () {
@@ -75,7 +76,7 @@ var Post = React.createClass({
 			buttonText = "Hated";
 		}
 		return(
-			<div>
+			<div className="Posts-Collection">
 				<p>{this.props.postItem.text}{files}<Button onClick={this.showComments} type="Comment"/><Button onClick={this.showLike} type={buttonText}/></p>
 				{enableComment}
 			</div>
